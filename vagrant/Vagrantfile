@@ -1,0 +1,41 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ip_dev = "192.168.33.10"
+ip_db = "192.168.33.20"
+db_name = "wordp_db"
+user = "admin"
+password = "password"
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.box_check_update = false
+ 
+  config.vm.define "db" do |db|
+     db.vm.network "private_network", ip: ip_db 
+     db.vm.hostname = "db"  
+     db.vm.provider "virtualbox" do |vb|
+	 vb.gui = false
+         vb.memory = "1024"
+     end
+     db.vm.provision "shell" do |s| 
+        s.path = "db.sh"
+        s.args = [db_name, user, password]
+     end
+  end
+
+  config.vm.define "dev" do |dev|
+      dev.vm.network "private_network", ip: ip_dev
+      dev.vm.hostname = "testing"
+      dev.vm.provider "virtualbox" do |vb|
+         vb.gui = false
+         vb.memory = "2048"
+      end
+      dev.vm.provision "shell" do |s| 
+        s.path = "dev.sh"
+        s.args = [db_name, user, password, ip_db]
+      end
+  end
+
+end
