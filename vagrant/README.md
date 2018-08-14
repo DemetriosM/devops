@@ -1,0 +1,1 @@
+Vagrantfile - creates two virtual machines, on one machine apache and wordpress, on the second - mysql.
