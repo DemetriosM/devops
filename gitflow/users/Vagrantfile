@@ -1,0 +1,37 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+u1_ip = "192.168.33.20"
+u1_name = "u1"
+u1_email = "u1@email.com"
+
+u2_ip = "192.168.33.30"
+u2_name = "u2"
+u2_email = "u2@email.com"
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.box_check_update = false
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "256"
+  end
+ 
+  config.vm.define "u1" do |u1|
+    u1.vm.network "private_network", ip: u1_ip
+    u1.vm.provision "shell" do |s|
+      s.path = "user.sh"
+      s.args = [u1_name, u1_email]
+    end
+  end
+
+  config.vm.define "u2" do |u2|
+    u2.vm.network "private_network", ip: u2_ip
+    u2.vm.provision "shell" do |s|
+      s.path = "user.sh"
+      s.args = [u2_name, u2_email]
+    end
+  end
+
+end

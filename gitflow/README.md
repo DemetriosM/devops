@@ -1,0 +1,1 @@
+Vagrantfile - creates three virtual machines, on one gitlab, on others - users with installed git.
