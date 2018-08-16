@@ -1,0 +1,1 @@
+Vagrantfile - create a three-member replica set from three existing mongod instances running with access control disabled.

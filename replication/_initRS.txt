@@ -1,0 +1,8 @@
+
+sudo mongod --bind_ip 127.0.0.1,192.168.33.20 --replSet "rs0"
+sudo mongod --bind_ip 127.0.0.1,192.168.33.30 --replSet "rs0"
+sudo mongod --bind_ip 127.0.0.1,192.168.33.40 --replSet "rs0"
+
+rs.initiate()
+rs.add( { host: "192.168.33.30:27017" } )
+rs.add( { host: "192.168.33.40:27017" } )

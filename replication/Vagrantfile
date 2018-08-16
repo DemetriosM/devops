@@ -1,0 +1,44 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+mongo1_ip = "192.168.33.20"
+mongo2_ip = "192.168.33.30"
+mongo3_ip = "192.168.33.40"
+repl_set_name = "rs0"
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.box_check_update = false
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+  end
+ 
+  config.vm.define "m1" do |m1|
+    m1.vm.network "private_network", ip: mongo1_ip
+    m1.vm.hostname = "mongo1"
+    m1.vm.provision "shell" do |s|
+      s.path = "mongo.sh"
+      s.args = [repl_set_name, mongo1_ip]
+    end
+  end
+
+  config.vm.define "m2" do |m2|
+    m2.vm.network "private_network", ip: mongo2_ip
+    m2.vm.hostname = "mongo2"
+    m2.vm.provision "shell" do |s|
+      s.path = "mongo.sh"
+      s.args = [repl_set_name, mongo2_ip]
+    end
+  end
+
+  config.vm.define "m3" do |m3|
+    m3.vm.network "private_network", ip: mongo3_ip
+    m3.vm.hostname = "mongo3"
+    m3.vm.provision "shell" do |s|
+      s.path = "mongo.sh"
+      s.args = [repl_set_name, mongo3_ip]
+    end
+  end
+end
