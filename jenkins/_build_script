@@ -1,0 +1,7 @@
+rm -rf /var/lib/jenkins/workspace/wp_files/wp.tar.gz
+cd /var/lib/jenkins/workspace/wp_files/
+tar -czf wp.tar.gz ./*
+ssh vagrant@192.168.33.20 'sudo rm -rf /var/www/html/*'
+scp /var/lib/jenkins/workspace/wp_files/wp.tar.gz vagrant@192.168.33.20:/var/www/html
+ssh vagrant@192.168.33.20 'sudo tar -xzf /var/www/html/wp.tar.gz -C /var/www/html'
+ssh vagrant@192.168.33.20 'sudo service apache2 restart'

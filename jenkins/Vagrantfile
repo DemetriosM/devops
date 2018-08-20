@@ -1,0 +1,39 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ip_jenkins = "192.168.33.10"
+ip_lamp = "192.168.33.20"
+db_name = "wordp_db"
+user = "admin"
+password = "password"
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.box_check_update = false
+ 
+  config.vm.define "j" do |j|
+    j.vm.network "private_network", ip: ip_jenkins 
+    j.vm.hostname = "jenkins"  
+    j.vm.provider "virtualbox" do |vb|
+	     vb.gui = false
+       vb.memory = "1024"
+    end
+    j.vm.provision "shell" do |s| 
+       s.path = "jenkins.sh"
+    end
+  end
+
+  config.vm.define "dev" do |dev|
+    dev.vm.network "private_network", ip: ip_lamp
+    dev.vm.hostname = "lamp"
+    dev.vm.provider "virtualbox" do |vb|
+       vb.gui = false
+       vb.memory = "1536"
+    end
+    dev.vm.provision "shell" do |s| 
+      s.path = "lamp.sh"
+      s.args = [db_name, user, password]
+    end
+  end
+
+end
