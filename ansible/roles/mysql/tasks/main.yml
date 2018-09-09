@@ -1,0 +1,34 @@
+---
+- name: Install MySQL and required software
+  apt: 
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - python-mysqldb
+    - mysql-server
+    - php-mysql
+
+- name: Create mysql database
+  mysql_db: 
+    name: "{{ wp_mysql_db }}"
+    state: present
+  become: yes
+
+- name: Create mysql user
+  mysql_user: 
+    name: "{{ wp_mysql_user }}"
+    password: "{{ wp_mysql_password }}"
+    priv: '*.*:ALL,GRANT'
+    host: '%'
+    state: present
+  become: yes
+
+- name: Bind IP MySQL
+  ini_file:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    section: mysqld
+    option: bind-address
+    value: 0.0.0.0
+  notify: restart MySQL
+  become: yes

@@ -1,0 +1,21 @@
+---
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=3600
+  become: yes
+
+- name: Install apache and required software
+  apt: name={{ item }} state=present
+  become: yes
+  with_items:
+    - apache2
+    - php
+    - libapache2-mod-php
+    - php-mysql
+  
+- name: Update default Apache site
+  lineinfile: 
+    dest: /etc/apache2/sites-enabled/000-default.conf 
+    regexp: "(.)+DocumentRoot /var/www/html"
+    line: "DocumentRoot /var/www/wordpress"
+  notify: restart apache
+  become: yes

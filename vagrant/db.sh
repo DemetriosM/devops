@@ -14,6 +14,5 @@ mysql -uroot -ppassword -e "CREATE USER '$USER'@'%' IDENTIFIED BY '$PASSWORD';"
 mysql -uroot -ppassword -e "GRANT USAGE ON *.* TO '$USER'@'%';"
 mysql -uroot -ppassword -e "CREATE DATABASE IF NOT EXISTS $DB;"
 mysql -uroot -ppassword -e "GRANT ALL PRIVILEGES ON $DB.* TO '$USER'@'%' IDENTIFIED BY '$PASSWORD';"
-mysql -uroot -ppassword -e "FLUSH PRIVILEGES;"
 sudo sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/my.cnf
 sudo service mysql restart

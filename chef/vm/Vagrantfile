@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = '2'.freeze
+
+ubuntu = 'ubuntu/xenial64'
+validator = File.read("#{Dir.home}/Documents/devops/chef/wp-repo/.chef/softserve-validator.pem")
+chef_secret_key = File.read("#{Dir.home}/Documents/devops/chef/wp-repo/.chef/chef_secret_key")
+client_web = File.read("#{Dir.home}/Documents/devops/chef/wp-repo/.chef/client_web.rb")
+client_db = File.read("#{Dir.home}/Documents/devops/chef/wp-repo/.chef/client_db.rb")
+
+nodes = [
+	{box: ubuntu, name: 'dm-wp', hostname: 'web-node', memory: '1024', ip: '192.168.33.15', client: client_web},
+	{box: ubuntu, name: 'dm-db', hostname: 'db-node', memory: '1024', ip: '192.168.33.25', client: client_db}]
+	
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  nodes.each do |nodes| # DESCRIBE NODES
+    config.vm.define nodes[:name] do |node|
+
+      node.vm.box = nodes[:box]
+      node.vm.network "private_network", ip: nodes[:ip] 
+      node.vm.hostname = nodes[:hostname]
+
+      node.vm.provider :virtualbox do |vb|
+        vb.name = nodes[:name]
+        vb.memory = nodes[:memory]
+      end
+
+      node.vm.provision "shell", inline: <<-SHELL  
+        wget https://packages.chef.io/files/stable/chef/14.4.56/ubuntu/16.04/chef_14.4.56-1_amd64.deb
+        dpkg -i chef_14.4.56-1_amd64.deb
+        sudo mkdir /etc/chef && sudo touch /etc/chef/client.rb /etc/chef/softserve-validator.pem /etc/chef/chef_secret_key
+        sudo echo '#{validator}' >> /etc/chef/softserve-validator.pem
+        sudo echo '#{chef_secret_key}' >> /etc/chef/chef_secret_key
+        sudo echo '#{nodes[:client]}' >> /etc/chef/client.rb
+        sudo chef-client
+      SHELL
+
+    end
+  end
+
+end

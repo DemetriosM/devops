@@ -1,1 +1,4 @@
 .vagrant
+*ubuntu-xenial-*
+playbook.retry
+.chef

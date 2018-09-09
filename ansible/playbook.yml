@@ -1,0 +1,21 @@
+- hosts: all
+  gather_facts: false
+  pre_tasks:
+    - name: 'install python'
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      register: output
+      changed_when: output.stdout != ""
+      become: yes
+
+- hosts: dbservers
+  roles: 
+    - mysql
+  vars_files:
+    - vars.yml 
+
+- hosts: webservers
+  roles: 
+    - apache
+    - wordpress
+  vars_files:
+    - vars.yml 
