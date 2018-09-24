@@ -1,0 +1,8 @@
+registry:
+  container_name: registry_wp
+  restart: always
+  image: registry:2
+  ports:
+    - 5000:5000
+  volumes:
+    - ./data:/var/lib/registry

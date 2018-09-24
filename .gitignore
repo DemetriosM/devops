@@ -3,3 +3,5 @@
 *ubuntu-xenial-*
 playbook.retry
 .chef
+wp-content
+registry/data

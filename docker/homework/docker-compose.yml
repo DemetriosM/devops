@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+  apache:
+    build: ./
+    volumes:
+      - ./apache_conf:/etc/apache2/sites-enabled/
+    ports:
+      - "8080:80"
+    restart: always
+
+  nginx_green:
+    image: nginx
+    volumes:
+      - ./green:/usr/share/nginx/html/
+    restart: always
+
+  nginx_blue:
+    image: nginx
+    volumes:
+      - ./blue:/usr/share/nginx/html/
+    restart: always
