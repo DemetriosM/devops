@@ -1,0 +1,6 @@
+secret.tfvars
+dbsecret.tfvars
+.terraform
+terraform.tfstate
+terraform.tfstate.backup
+temp_plan
