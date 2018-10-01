@@ -1,2 +1,2 @@
 # devops
-The study of tools for continuous integration
+The study of tools for continuous integration and continuous delivery
