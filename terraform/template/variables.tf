@@ -90,7 +90,15 @@ variable "ami" {
 }
 variable "associate_public_ip_address" {
   description = "Is EC2 associating with public ip address"
-  default     = false
+  default     = true
+}
+variable "connection_type" {
+  description = "Connection protocol type"
+  default     = "ssh"
+}
+variable "connection_user" {
+  description = "Connection user name"
+  default     = "ubuntu"
 }
 variable "instance_type" {
   description = "AWS EC2 instance type"
@@ -99,4 +107,8 @@ variable "instance_type" {
 variable "key_name" {
   description = "instance key pair name"
   default     = "learn-aws-wp"
+}
+variable "private_key_path" {
+  description = "Private key path"
+  default     = "${file("~/.ssh/learn-aws-wp.pem")}"
 }

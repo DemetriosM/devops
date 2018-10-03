@@ -4,6 +4,12 @@ variable "ami" {
 variable "associate_public_ip_address" {
   description = "Is EC2 associating with public ip address"
 }
+variable "connection_type" {
+  description = "Connection protocol type"
+}
+variable "connection_user" {
+  description = "Connection user name"
+}
 variable "db_host" {
   description = "DB host"
 }
@@ -24,6 +30,9 @@ variable "key_name" {
 }
 variable "name" {
   description = "Name to be used on all resources as prefix"
+}
+variable "private_key_path" {
+  description = "Private key path"
 }
 variable "subnet_id" {
   description = "Subnet for EC2"  

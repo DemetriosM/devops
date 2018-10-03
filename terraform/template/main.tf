@@ -47,6 +47,9 @@ module "ec2" {
 
   ami                         = "${var.ami}"
   associate_public_ip_address = "${var.associate_public_ip_address}"
+  connection_type             = "${var.connection_type}"
+  connection_user             = "${var.connection_user}"
+  private_key_path            = "${var.private_key_path}"
   db_host                     = "${module.rds.db_host}"
   db_name                     = "${var.db_name}"
   db_user                     = "${var.db_user}"

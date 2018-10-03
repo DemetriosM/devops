@@ -29,9 +29,9 @@ resource "aws_instance" "ec2" {
     EOF
     ]
     connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = "${file("~/.ssh/learn-aws-wp.pem")}"
+      type        = "${var.connection_type}"
+      user        = "${var.connection_user}"
+      private_key = "${var.private_key_path}"
     }
   }
 }
