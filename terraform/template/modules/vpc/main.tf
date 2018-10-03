@@ -5,7 +5,6 @@ resource "aws_vpc" "vpc" {
   enable_dns_support                  = "${var.enable_dns_support}"
   enable_dns_hostnames                = "${var.enable_dns_hostnames}"
   assign_generated_ipv6_cidr_block    = "${var.assign_generated_ipv6_cidr_block}"
-  enable_classiclink                  = "${var.enable_classiclink}"
   tags {
       Name = "${lower(var.name)}-vpc"
   }

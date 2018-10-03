@@ -8,7 +8,6 @@ module "vpc" {
   source = "./modules/vpc"
 
   assign_generated_ipv6_cidr_block = "${var.assign_generated_ipv6_cidr_block}"
-  enable_classiclink               = "${var.enable_classiclink}"
   enable_dns_hostnames             = "${var.enable_dns_hostnames}"
   enable_dns_support               = "${var.enable_dns_support}"
   instance_tenancy                 = "${var.instance_tenancy}"
@@ -49,7 +48,7 @@ module "ec2" {
   associate_public_ip_address = "${var.associate_public_ip_address}"
   connection_type             = "${var.connection_type}"
   connection_user             = "${var.connection_user}"
-  private_key_path            = "${var.private_key_path}"
+  private_key_path            = "${file("~/.ssh/learn-aws-wp.pem")}"
   db_host                     = "${module.rds.db_host}"
   db_name                     = "${var.db_name}"
   db_user                     = "${var.db_user}"

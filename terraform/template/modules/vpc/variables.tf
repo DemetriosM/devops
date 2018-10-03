@@ -1,9 +1,6 @@
 variable "assign_generated_ipv6_cidr_block" {
   description = "Generation IPv6"
 }
-variable "enable_classiclink" {
-  description = "Enabling classiclink"
-}
 variable "enable_dns_hostnames" {
   description = "Enabling dns hostnames"
 }

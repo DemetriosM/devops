@@ -15,10 +15,6 @@ variable "assign_generated_ipv6_cidr_block" {
     description = "Generation IPv6"
     default     = "false"
 }
-variable "enable_classiclink" {
-    description = "Enabling classiclink"
-    default     = "false"
-}
 variable "enable_dns_hostnames" {
     description = "Enabling dns hostnames"
     default     = "true"
@@ -107,8 +103,4 @@ variable "instance_type" {
 variable "key_name" {
   description = "instance key pair name"
   default     = "learn-aws-wp"
-}
-variable "private_key_path" {
-  description = "Private key path"
-  default     = "${file("~/.ssh/learn-aws-wp.pem")}"
 }
